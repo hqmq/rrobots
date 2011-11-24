@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Marcin Michalowski"]
   s.email       = ["h13ronim@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{RRobots is a C-Robots/Robocode clone written entirely in ruby.}
+  s.description = %q{RRobots is a simulation environment for robots, these robots have a scanner and a gun, can move forward and backwards and are entirely controlled by ruby scripts.}
 
   s.rubyforge_project = "rrobots"
 
