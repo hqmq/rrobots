@@ -4,6 +4,13 @@ RRobots is a simulation environment for robots, these robots have a scanner
 and a gun, can move forward and backwards and are entirely controlled by
 ruby scripts.
 
+== Getting Started
+First you'll need to install the Gosu gem. If you have never installed this gem you might want to check the [Getting Started](https://github.com/jlnr/gosu/wiki) documentation for your platform. You should be able to get it working on OSX, Windows or Linux.  Once that is installed you should be able to clone this repository and then simply run a match like this:
+
+```
+$ ./bin/rrobots --timeout=3000 examples/NervousDuck.rb examples/SlowlyTurning.rb
+```
+
 == Example script
 
   require 'rrobots'
