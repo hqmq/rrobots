@@ -36,9 +36,9 @@ class RRobotsGameWindow < Gosu::Window
 
   def init_window
     @boom = (0..14).map do |i|
-      Gosu::Image.new(self, File.join(File.dirname(__FILE__),"../images/explosion#{i.to_s.rjust(2, '0')}.bmp"))
+      Gosu::Image.new(File.join(File.dirname(__FILE__),"../images/explosion#{i.to_s.rjust(2, '0')}.bmp"))
     end
-    @bullet_image = Gosu::Image.new(self, File.join(File.dirname(__FILE__),"../images/bullet.png"))
+    @bullet_image = Gosu::Image.new(File.join(File.dirname(__FILE__),"../images/bullet.png"))
   end
 
   def init_simulation
@@ -87,15 +87,15 @@ class RRobotsGameWindow < Gosu::Window
       col = COLORS[i % COLORS.size]
       font_col = FONT_COLORS[i % FONT_COLORS.size]
       @robots[ai] ||= GosuRobot.new(
-                                    Gosu::Image.new(self, File.join(File.dirname(__FILE__),"../images/#{col}_body000.bmp")),
-                                    Gosu::Image.new(self, File.join(File.dirname(__FILE__),"../images/#{col}_turret000.bmp")),
-                                    Gosu::Image.new(self, File.join(File.dirname(__FILE__),"../images/#{col}_radar000.bmp")),
-                                    @small_font,
-                                    @small_font,
-                                    @small_font,
-                                    col,
-                                    font_col
-                                   )
+        Gosu::Image.new(File.join(File.dirname(__FILE__),"../images/#{col}_body000.bmp")),
+        Gosu::Image.new(File.join(File.dirname(__FILE__),"../images/#{col}_turret000.bmp")),
+        Gosu::Image.new(File.join(File.dirname(__FILE__),"../images/#{col}_radar000.bmp")),
+        @small_font,
+        @small_font,
+        @small_font,
+        col,
+        font_col
+      )
       @robots[ai].body.draw_rot(ai.x / 2, ai.y / 2, ZOrder::Robot, (-(ai.heading-90)) % 360)
       @robots[ai].gun.draw_rot(ai.x / 2, ai.y / 2, ZOrder::Robot, (-(ai.gun_heading-90)) % 360)
       @robots[ai].radar.draw_rot(ai.x / 2, ai.y / 2, ZOrder::Robot, (-(ai.radar_heading-90)) % 360)
