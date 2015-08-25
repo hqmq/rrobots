@@ -1,3 +1,5 @@
+require_relative '../lib/rrobots'
+
 class SlowlyTurning
   include Robot
 

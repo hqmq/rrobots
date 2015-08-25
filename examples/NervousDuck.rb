@@ -1,4 +1,4 @@
-require 'rrobots'
+require_relative '../lib/rrobots'
 
 class NervousDuck
    include Robot
