@@ -88,12 +88,10 @@ platforms that have ruby and Gosu.
 
 == Quick start
 
-```
-$ git clone git@github.com:urug/rrobots.git
-$ cd rrobots
-$ bundle
-$ bundle exec rrobots examples/NervousDuck.rb examples/NervousDuck.rb
-```
+  $ git clone git@github.com:urug/rrobots.git
+  $ cd rrobots
+  $ bundle
+  $ bundle exec rrobots examples/NervousDuck.rb examples/NervousDuck.rb
 
 == Usage
 
