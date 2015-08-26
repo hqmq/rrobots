@@ -88,6 +88,9 @@ platforms that have ruby and Gosu.
 
 == Quick start
 
+  # assuming Mac OS X with homebrew because reasons
+  $ brew install sdl2
+  $ brew install gosu
   $ git clone git@github.com:urug/rrobots.git
   $ cd rrobots
   $ bundle
