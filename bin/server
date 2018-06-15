@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+require "rrobots"
+require "socket"
+
+$debug = false
+
+socket = UDPSocket.new
+socket.bind("0.0.0.0", 5566)
+registry = Rrobots::PlayerRegistry.new(socket)
+
+puts "Starting Server"
+loop do
+  Rrobots.receive_all_waiting_packets(socket) do |packet|
+    registry.handle_packet(packet)
+  end
+  Rrobots::NetworkedGame.run(socket, registry, 1)
+  sleep(0.1)
+end
