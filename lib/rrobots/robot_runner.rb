@@ -98,7 +98,7 @@ class RobotRunner
 
   def pre_tick
     update_state
-    @robot.request_move
+    @robot.request_move(@events)
     @events.clear
   end
 
@@ -232,11 +232,11 @@ class RobotRunner
   end
 
   def to_s
-    @robot.class.name
+    robot.player.name
   end
 
   def name
-    @robot.class.name
+    robot.player.name
   end
 
 end
