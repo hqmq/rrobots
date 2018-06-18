@@ -121,14 +121,32 @@ class Robot
 
   def handle_packet(packet)
     msg = packet.first
-    if match = /\AFIRE (\d\.?\d*)\z/.match(msg)
+    if msg.start_with?("REG")
+      # Do nothing
+    elsif match = /\AFIRE (\d\.?\d*)\z/.match(msg)
       fire(match[1].to_f)
+    elsif match = /\AACCELERATE (\d\.?\d*)\z/.match(msg)
+      accelerate(match[1].to_f)
+    elsif msg == "STOP"
+      stop
+    elsif match = /\AFIRE (\d\.?\d*)\z/.match(msg)
+      fire(match[1].to_f)
+    elsif match = /\ATURN (\d\.?\d*)\z/.match(msg)
+      turn(match[1].to_f)
+    elsif match = /\ATURN_GUN (\d\.?\d*)\z/.match(msg)
+      turn_gun(match[1].to_f)
+    elsif match = /\ATURN_RADAR (\d\.?\d*)\z/.match(msg)
+      turn_radar(match[1].to_f)
+    elsif msg.start_with?("SAY ")
+      say(msg[4..-1])
+    elsif msg.start_with?("BROADCAST ")
+      broadcast(msg[10..-1])
     else
-      p packet
+      puts "unknown command from #{player.name}: #{msg}"
     end
   end
 
-  def request_move
+  def request_move(events)
     packet = JSON.generate({
       energy: energy,
       gun_heading: gun_heading,
@@ -138,8 +156,8 @@ class Robot
       speed: speed,
       x: x,
       y: y,
-      robot_scanned: robot_scanned,
-      broadcasts_received: broadcasts,
+      robots_scanned: events["robot_scanned"],
+      broadcasts: events["broadcasts"],
     })
     player.send "STATUS #{packet}"
   end
