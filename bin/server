@@ -5,28 +5,19 @@ require "socket"
 
 $debug = false
 
-players_per_game = 1
-game_width = 1600
-game_height = 1024
+$players_per_game = 1
+$game_width = 1600
+$game_height = 1024
 port = 5566
-timeout = 60 * 60 * 4 # 4min * 60sec/min * 60fps
+$timeout = 60 * 60 * 4 # 4min * 60sec/min * 60fps
 
-socket = UDPSocket.new
-socket.bind("0.0.0.0", port)
-registry = Rrobots::PlayerRegistry.new(socket)
+$socket = UDPSocket.new
+$socket.bind("0.0.0.0", port)
+$registry = Rrobots::PlayerRegistry.new
 
 puts "Starting Server"
 loop do
-  Rrobots.receive_all_waiting_packets(socket) do |packet|
-    registry.handle_packet(packet)
-  end
-  Rrobots::NetworkedGame.run(
-    socket,
-    registry,
-    players_per_game,
-    game_width,
-    game_height,
-    timeout
-  )
+  Rrobots.receive_all_waiting_packets
+  Rrobots::NetworkedGame.run()
   sleep(0.1)
 end

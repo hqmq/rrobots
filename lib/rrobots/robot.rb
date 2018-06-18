@@ -112,10 +112,18 @@ class Robot
   #broadcasts received last turn
   attr_event :broadcasts
 
-  def initialize(socket)
-    @socket = socket
+  attr_reader :player
+
+  def initialize(player)
+    @player = player
   end
 
   def handle_packet(packet)
+    put "== Robot#handle_packet"
+    p packet
+  end
+
+  def request_move
+    player.send "PLS_MOVE"
   end
 end

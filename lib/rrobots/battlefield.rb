@@ -11,11 +11,12 @@ class Battlefield
   attr_reader :timeout  # how many ticks the match can go before ending.
   attr_reader :game_over
 
-  def initialize width, height, timeout, seed
+  def initialize(width, height, timeout, seed)
     @width, @height = width, height
     @seed = seed
     @time = 0
     @robots = []
+    @robots_by_source = {}
     @teams = Hash.new{|h,k| h[k] = [] }
     @bullets = []
     @explosions = []
@@ -29,6 +30,9 @@ class Battlefield
     when RobotRunner
       @robots << object
       @teams[object.team] << object
+      player = object.robot.player
+      key = [player.from_ip, player.from_port]
+      @robots_by_source[key] = object
     when Bullet
       @bullets << object
     when Explosion
@@ -44,13 +48,18 @@ class Battlefield
     bullets.each{|bullet| bullet.tick}
 
     robots.each do |robot|
-      begin
-        robot.send :internal_tick unless robot.dead
-      rescue RuntimeError => bang
-        puts "#{robot} made an exception:"
-        puts "#{bang.class}: #{bang}", bang.backtrace
-        robot.instance_eval{@energy = -1}
+      robot.send :pre_tick unless robot.dead
+    end
+
+    Rrobots.receive_all_up_to(0.01) do |packet|
+      _, from_port, _, from_ip = packet.last
+      if robot = @robots_by_source[[from_ip, from_port]]
+        robot.handle_packet(packet)
       end
+    end
+
+    robots.each do |robot|
+      robot.send :post_tick unless robot.dead
     end
 
     @time += 1
