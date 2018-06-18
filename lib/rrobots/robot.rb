@@ -1,5 +1,6 @@
-class Robot
+require "json"
 
+class Robot
   def self.attr_state(*names)
     names.each{|n|
       n = n.to_sym
@@ -119,11 +120,27 @@ class Robot
   end
 
   def handle_packet(packet)
-    put "== Robot#handle_packet"
-    p packet
+    msg = packet.first
+    if match = /\AFIRE (\d\.?\d*)\z/.match(msg)
+      fire(match[1].to_f)
+    else
+      p packet
+    end
   end
 
   def request_move
-    player.send "PLS_MOVE"
+    packet = JSON.generate({
+      energy: energy,
+      gun_heading: gun_heading,
+      heading: heading,
+      radar_heading: radar_heading,
+      time: time,
+      speed: speed,
+      x: x,
+      y: y,
+      robot_scanned: robot_scanned,
+      broadcasts_received: broadcasts,
+    })
+    player.send "STATUS #{packet}"
   end
 end

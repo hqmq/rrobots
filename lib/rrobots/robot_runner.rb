@@ -152,11 +152,6 @@ class RobotRunner
     @robot.actions.clear
   end
 
-  def robot_tick
-    @robot.tick @robot.events
-    @events.clear
-  end
-
   def fire
     if (@actions[:fire] > 0) && (@gun_heat == 0)
       bullet = Bullet.new(@battlefield, @x, @y, @gun_heading, 30, @actions[:fire]*3.0, self)

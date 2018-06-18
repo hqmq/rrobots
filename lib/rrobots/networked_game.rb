@@ -7,7 +7,7 @@ module Rrobots
       return false unless players
       puts "== START GAME"
       battlefield = setup_battlefield(players)
-      run_in_gui(battlefield)
+      run_in_gui(battlefield, players)
     end
 
     def self.setup_battlefield(players)
@@ -16,11 +16,12 @@ module Rrobots
       players.each_with_index do |player, index|
         robot = RobotRunner.new(Robot.new(player), battlefield, index)
         battlefield << robot
+        player.send("START_GAME #{$game_width}x#{$game_height} #{robot.size}")
       end
       battlefield
     end
 
-    def self.run_in_gui(battlefield)
+    def self.run_in_gui(battlefield, players)
       window = RRobotsGameWindow.new(battlefield, $game_width, $game_height)
       ticks_after_game_over = 60 * 5 # let the game run for 5 sec after it's over
       window.on_game_over do |battlefield|
@@ -31,6 +32,7 @@ module Rrobots
         ticks_after_game_over -= 1
       end
       window.show
+      players.each{|player| player.send "GAME_OVER" }
     end
   end
 end
