@@ -6,10 +6,11 @@ module Rrobots
 
     def handle_packet(packet)
       msg, (_, from_port, from_host, from_ip) = packet
-      if match = /\AREG ([a-zA-Z]{1,20})\z/.match(msg)
+      if match = /\AREG ([a-zA-Z\d]{1,20})\z/.match(msg)
         name = match[1]
-        @players[name] = Player.new(from_ip, from_port, name)
-        @players[name].send("REGD")
+        key = [from_ip, from_port]
+        @players[key] = Player.new(from_ip, from_port, name)
+        @players[key].send("REGD")
       end
     end
 
