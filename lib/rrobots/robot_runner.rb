@@ -96,9 +96,17 @@ class RobotRunner
     end
   end
 
-  def internal_tick
+  def pre_tick
     update_state
-    robot_tick
+    @robot.request_move
+    @events.clear
+  end
+
+  def handle_packet(packet)
+    @robot.handle_packet(packet)
+  end
+
+  def post_tick
     parse_actions
     fire
     turn
@@ -142,11 +150,6 @@ class RobotRunner
     @robot.events = @events.dup
     @robot.actions ||= Hash.new(0)
     @robot.actions.clear
-  end
-
-  def robot_tick
-    @robot.tick @robot.events
-    @events.clear
   end
 
   def fire
