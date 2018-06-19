@@ -200,7 +200,7 @@ class RobotRunner
             (@old_radar_heading >= a+360 && a+360 >= @new_radar_heading) ||
             (@old_radar_heading <= a-360 && a-360 <= @new_radar_heading) ||
             (@old_radar_heading >= a-360 && a-360 >= @new_radar_heading))
-          @events['robot_scanned'] << [Math.hypot(@y - other.y, other.x - @x)]
+          @events['robot_scanned'] << Math.hypot(@y - other.y, other.x - @x)
         end
       end
     end
