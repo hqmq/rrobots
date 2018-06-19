@@ -123,19 +123,19 @@ class Robot
     msg = packet.first
     if msg.start_with?("REG")
       # Do nothing
-    elsif match = /\AFIRE (\d\.?\d*)\z/.match(msg)
+    elsif match = /\AFIRE (-?\d\.?\d*)\z/.match(msg)
       fire(match[1].to_f)
-    elsif match = /\AACCELERATE (\d\.?\d*)\z/.match(msg)
+    elsif match = /\AACCELERATE (-?\d\.?\d*)\z/.match(msg)
       accelerate(match[1].to_f)
     elsif msg == "STOP"
       stop
-    elsif match = /\AFIRE (\d\.?\d*)\z/.match(msg)
+    elsif match = /\AFIRE (-?\d\.?\d*)\z/.match(msg)
       fire(match[1].to_f)
-    elsif match = /\ATURN (\d\.?\d*)\z/.match(msg)
+    elsif match = /\ATURN (-?\d\.?\d*)\z/.match(msg)
       turn(match[1].to_f)
-    elsif match = /\ATURN_GUN (\d\.?\d*)\z/.match(msg)
+    elsif match = /\ATURN_GUN (-?\d\.?\d*)\z/.match(msg)
       turn_gun(match[1].to_f)
-    elsif match = /\ATURN_RADAR (\d\.?\d*)\z/.match(msg)
+    elsif match = /\ATURN_RADAR (-?\d\.?\d*)\z/.match(msg)
       turn_radar(match[1].to_f)
     elsif msg.start_with?("SAY ")
       say(msg[4..-1])

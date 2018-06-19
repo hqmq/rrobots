@@ -13,8 +13,10 @@ module Rrobots
       elsif match = /\AREG ([a-zA-Z\d]{1,20})\z/.match(msg)
         name = match[1]
         key = [from_ip, from_port]
+        previous = @players[key]
         @players[key] = Player.new(from_ip, from_port, name)
         @players[key].send("REGD")
+        puts "\tRegistered: #{name} => #{from_ip}:#{from_port}" if previous && previous.name != name
       end
     end
 
@@ -24,7 +26,9 @@ module Rrobots
         player.send("ALIVE?")
       end
       Rrobots.receive_all_up_to(0.02)
+      ejected_names = @players.select{|_key, player| player.expired }.map(&:last).map(&:name)
       @players.reject!{|_key, player| player.expired }
+      puts "EJECTING #{ejected_names.join(', ')}" unless ejected_names.empty?
     end
 
     def random_players
@@ -43,7 +47,6 @@ module Rrobots
       @from_ip = from_ip
       @name = name
       @expired = false
-      puts "\tRegistered: #{name} => #{from_ip}:#{from_port}"
     end
 
     def send(msg)
