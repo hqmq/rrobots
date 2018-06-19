@@ -16,7 +16,7 @@ module Rrobots
         previous = @players[key]
         @players[key] = Player.new(from_ip, from_port, name)
         @players[key].send("REGD")
-        puts "\tRegistered: #{name} => #{from_ip}:#{from_port}" if previous && previous.name != name
+        puts "\tRegistered: #{name} => #{from_ip}:#{from_port}" if previous.nil? || previous.name != name
       end
     end
 

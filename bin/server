@@ -11,7 +11,7 @@ $socket = UDPSocket.new
 $socket.bind("0.0.0.0", 5566)
 $registry = Rrobots::PlayerRegistry.new
 
-puts "Starting Server"
+puts "Starting Server on 0.0.0.0:5566"
 loop do
   Rrobots.receive_all_waiting_packets
   Rrobots::NetworkedGame.run()
