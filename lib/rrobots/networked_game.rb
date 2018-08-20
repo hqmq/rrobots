@@ -17,7 +17,7 @@ module Rrobots
       players.each_with_index do |player, index|
         robot = RobotRunner.new(Robot.new(player), battlefield, index)
         battlefield << robot
-        player.send("START_GAME #{$options.width}x#{$options.height} #{robot.size}")
+        player.send("START_GAME #{$options.width*2}x#{$options.height*2} #{robot.size}")
       end
       battlefield
     end
