@@ -5,7 +5,7 @@ This derivation exposes the game as a UDP server.
 This allows participants to implement their tank in any language they like.
 [Tankinho](https://github.com/mmmries/tankinho) is an example implementation in Elixir.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/MWC36pFxUrs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+You can see a [sample of the game running here](https://youtu.be/MWC36pFxUrs?t=1m16s).
 
 ## Usage
 
